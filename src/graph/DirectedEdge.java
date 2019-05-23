@@ -20,7 +20,6 @@ public class DirectedEdge extends Edge{
 	* Constructor of a DirectedEdge
 	* @param v1 Vertex at the start of the DirectedEdge
 	* @param v2 Vertex at the end of the DirectedEdge
-	* @return a new DirectedEdge
 	* @throws Exception if the Vertices does not have the same parent Graph (it can be both null without problem)
   * @see graph.Edge
 	*/

@@ -28,7 +28,6 @@ public class Vertex{
 	* Constructor of an Vertex (with parent)
 	* @param parent Graph which the vertex belongs to
 	* @param content Content Object of the Vertex
-	* @return a new Vertex
 	*/
 	public Vertex(Graph parent, Object content){
 		this.edges = new ArrayList<Edge>();
@@ -42,7 +41,6 @@ public class Vertex{
 	* Its parent is set to null
 	* </p>
 	* @param content Content Object of the Vertex
-	* @return a new Vertex
 	*/
 	public Vertex(Object content){
 		this(null, content);
@@ -50,7 +48,7 @@ public class Vertex{
 
 	/**
 	* Method that return all the Edges of the Vertex
-	* @return a List (ArrayList<Edge> or any other implementation) of Edges
+	* @return a List (ArrayList of Edges or any other implementation) of Edges
 	*/
 	public List<Edge> getEgdes(){
 		return this.edges;

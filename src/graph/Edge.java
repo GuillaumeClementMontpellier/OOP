@@ -15,7 +15,6 @@ public abstract class Edge{
 	* </p>
 	* @param v1 Vertex at one side of the Edge
 	* @param v2 Vertex at the other side of the Edge
-	* @return a new Edge
 	* @throws Exception if the Vertices does not have the same parent Graph (it can be both null without problem)
 	*/
 	public Edge(Vertex v1, Vertex v2) throws Exception{

@@ -10,13 +10,13 @@ public interface Graph {
 
 	/**
 	* Getter of all the Vertices of the graph
-	* @return a List (ArrayList<Vertex> or any other implementation) of Vertices
+	* @return a List (ArrayList of Vertices or any other implementation) of Vertices
 	*/
 	List<Vertex> getVertices();
 
 	/**
 	* Getter of all the Edges of the graph
-	* @return a List (ArrayList<Vertex> or any other implementation) of Edges
+	* @return a List (ArrayList of Vertices or any other implementation) of Edges
 	*/
 	List<Edge> getEdges();
 
