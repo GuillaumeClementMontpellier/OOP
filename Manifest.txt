@@ -1,1 +1,2 @@
+Class-Path: bin/
 Main-Class: graph.TestClass
