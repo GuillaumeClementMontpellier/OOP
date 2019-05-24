@@ -1,18 +1,10 @@
 package graph;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
 * @author Guillaume CLEMENT
 * @author Nesrine CHEKOU
 */
 public class Vertex{
-
-  /**
-  * List of Edges that touch the Vertex
-  */
-	private List<Edge> edges;
 
   /**
   * Content Object of the Vertex
@@ -30,7 +22,6 @@ public class Vertex{
 	* @param content Content Object of the Vertex
 	*/
 	public Vertex(Graph parent, Object content){
-		this.edges = new ArrayList<Edge>();
 		this.setContent(content);
 		this.parent = parent;
 	}
@@ -44,22 +35,6 @@ public class Vertex{
 	*/
 	public Vertex(Object content){
 		this(null, content);
-	}
-
-	/**
-	* Method that return all the Edges of the Vertex
-	* @return a List (ArrayList of Edges or any other implementation) of Edges
-	*/
-	public List<Edge> getEgdes(){
-		return this.edges;
-	}
-
-  /**
-  * Add an Edge to the Vertex
-  * @param edge The edge to add to the Vertex
-  */
-	protected void addEdge(Edge edge){
-		edges.add(edge);
 	}
 
   /**

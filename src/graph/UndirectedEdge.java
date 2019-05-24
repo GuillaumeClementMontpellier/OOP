@@ -15,11 +15,9 @@ public class UndirectedEdge extends Edge{
 	* Constructor of a UndirectedEdge
 	* @param v1 Vertex at one end of the UndirectedEgde
 	* @param v2 Vertex at the other end of the UndirectedEgde
-	* @throws Exception if the Vertices does not have the same parent Graph (it can be both null without problem)
   * @see graph.Edge
 	*/
-	public UndirectedEdge(Vertex v1, Vertex v2) throws Exception{
-		super(v1, v2);
+	public UndirectedEdge(Vertex v1, Vertex v2) {
 
 		this.vertices = new Vertex[2];
 

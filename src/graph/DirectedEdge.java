@@ -20,11 +20,9 @@ public class DirectedEdge extends Edge{
 	* Constructor of a DirectedEdge
 	* @param v1 Vertex at the start of the DirectedEdge
 	* @param v2 Vertex at the end of the DirectedEdge
-	* @throws Exception if the Vertices does not have the same parent Graph (it can be both null without problem)
-  * @see graph.Edge
+    * @see graph.Edge
 	*/
-	public DirectedEdge(Vertex v1, Vertex v2) throws Exception{
-		super(v1, v2);
+	public DirectedEdge(Vertex v1, Vertex v2){
 
 		this.start = v1;
 		this.end = v2;
