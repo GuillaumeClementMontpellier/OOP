@@ -1,26 +1,101 @@
 package maze;
 
-import graph.*;
-import impl.*;
+import java.io.*;
+import java.util.*;
 
 public class Game {
+
 	public static void main (String[] args){
 
-		Maze m = new Maze(3, 3, 0, 0, 2, 2);
+		//init I/O
 
-		m.addPath(0,0,"South");
-		m.addPath(0,1,"South");
-		m.addPath(0,2,"East");
-		m.addPath(1,2,"East");
+		Scanner lineTokenizer;
 
-		m.addPath(0,0,"East");
-		m.addPath(1,0,"East");
-		m.addPath(2,0,"South");
-		m.addPath(2,1,"South");
+		String inputLine = "1";
+		Console inputReader = System.console();
 
-		System.out.println("Yay !");
+		if(inputReader == null){
+			System.err.println("No Console");
+			System.exit(1);
+		}
 
-		System.out.println(m);
+		//input user pour les 2 cas
+
+		inputLine = inputReader.readLine();
+
+		//traitement input
+
+		if (inputLine.equals("1")){
+
+			Maze m = new Maze(3, 3, 0, 0, 2, 2);
+
+			System.out.println("Yay !");
+
+			m.setVide(0,1);
+			m.setVide(0,2);
+			m.setVide(1,2);
+
+			m.setVide(1,0);
+			m.setVide(2,0);
+			m.setVide(2,1);
+
+			System.out.println(m);
+
+		} else {
+
+			Maze m = new Maze(3, 3, 0, 0, 2, 2);
+
+			m.setVide(0,1);
+			m.setVide(0,2);
+			m.setVide(1,2);
+
+			m.setVide(1,0);
+			m.setVide(2,0);
+			m.setVide(2,1);
+
+			//charge sauve.maze 
+
+			try{
+				FileInputStream sauvegarde = new FileInputStream("save.maze");
+				ObjectInputStream in = new ObjectInputStream(sauvegarde);
+				m = (Maze) in.readObject();
+
+				in.close();
+				sauvegarde.close();
+
+			} catch (IOException i){
+				System.out.println("NOOOOOOOOOOOO");
+
+				i.printStackTrace();
+				System.exit(1);				
+			} catch (ClassNotFoundException c){
+				c.printStackTrace();
+				System.exit(1);		
+			}
+
+			//
+
+
+			//sauvegarde le maze
+			try {
+
+				FileOutputStream sauvegarde = new FileOutputStream("save.maze");
+				ObjectOutputStream out = new ObjectOutputStream(sauvegarde);
+
+				out.writeObject(m);
+				out.close();
+				sauvegarde.close();
+
+				System.out.println("Yes !!!");
+
+
+			} catch (IOException e){
+				e.printStackTrace();
+				System.err.println(e.getMessage());
+				System.exit(1);
+			}
+
+		}
 
 	}
 }

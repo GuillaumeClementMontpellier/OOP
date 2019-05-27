@@ -1,9 +1,6 @@
 package maze;
 
-import graph.*;
-import impl.*;
-
-public class Maze {
+public class Maze implements java.io.Serializable{
 
 	private Cell startCell;
 	private Cell finishCell;
@@ -13,7 +10,7 @@ public class Maze {
 	private int heigth;
 	private int width;
 
-	private UndirectedGraph graph;
+	private UndirectedGraphSerializable graph;
 
 	public Maze(int heigth, int width, int startX, int startY, int finishX, int finishY){
 
@@ -22,20 +19,27 @@ public class Maze {
 
 		this.cells = new Cell[width][heigth];
 
-		this.graph = new UndirectedGraph( ( (heigth-1) * width ) + ( heigth * (width-1) ), heigth * width);
+		this.graph = new UndirectedGraphSerializable( ( (heigth-1) * width ) + ( heigth * (width-1) ), heigth * width);
 
 		for(int x = 0; x < width; x++){
 
-			for(int y = 0; y < heigth; y++){				
+			for(int y = 0; y < heigth; y++){			
 
-				this.cells[x][y] = new Cell("w", x, y);
+				if(x == startX && y == startY){	
 
-				if(x == startX && y == startY){
-					this.startCell = this.cells[x][y] ;
+					this.cells[x][y] = new Cell("w", x, y, TypeCell.Debut);
+					this.startCell = this.cells[x][y];
+
+				} else if(x == finishX && y == finishY){	
+
+					this.cells[x][y] = new Cell("w", x, y, TypeCell.Arrivee);
+					this.finishCell = this.cells[x][y];
+
+				} else {	
+
+					this.cells[x][y] = new Cell("w", x, y, TypeCell.Mur);
+
 				}
-				if(x == finishX && y == finishY){
-					this.finishCell = this.cells[x][y] ;
-				} 
 
 				this.graph.addVertex(this.cells[x][y]) ;
 				
@@ -61,35 +65,67 @@ public class Maze {
 		return this.width;
 	}
 
-	public void addPath(int x, int y, String dir){
- 
-		if( (x < 0 || y < 0) || (x >= width || y >= heigth)){
-			return;
-		}
+	public void setVide(int x, int y){
 
-		switch(dir){
-			case "North":
-			    if (y != 0){
-			    	this.graph.addEdge(new UndirectedEdge(this.cells[x][y], this.cells[x][y-1]));
-			    }
-			break;
-			case "South":
-			    if (y != heigth - 1){
-			    	this.graph.addEdge(new UndirectedEdge(this.cells[x][y], this.cells[x][y+1]));
-			    }
-			break;
-			case "East":
-			    if (x != width-1){
-			    	this.graph.addEdge(new UndirectedEdge(this.cells[x][y], this.cells[x+1][y]));
-			    }
-			break;
-			case "West":
-			    if (x != 0){
-			    	this.graph.addEdge(new UndirectedEdge(this.cells[x][y], this.cells[x-1][y]));
-			    }
-			break;
-			default:
-			break;
+		if (this.cells[x][y].getTypeCell() == TypeCell.Mur){
+
+			this.cells[x][y].setTypeCell(TypeCell.Vide);
+
+			//rajoute les chemins
+			if (x > 0){
+				if(this.cells[x-1][y].getTypeCell() != TypeCell.Mur){
+
+					this.graph.addEdge(new UndirectedEdgeSerializable(this.cells[x][y], this.cells[x-1][y]));
+
+				}
+			} 
+			if (y > 0){
+				if(this.cells[x][y-1].getTypeCell() != TypeCell.Mur){
+					
+					this.graph.addEdge(new UndirectedEdgeSerializable(this.cells[x][y], this.cells[x][y-1]));
+
+				}
+
+			}
+			if (x < width-1){
+
+				if(this.cells[x+1][y].getTypeCell() != TypeCell.Mur){
+					
+					this.graph.addEdge(new UndirectedEdgeSerializable(this.cells[x][y], this.cells[x+1][y]));
+
+				}
+
+			}
+			if (y < heigth - 1){
+				if(this.cells[x][y+1].getTypeCell() != TypeCell.Mur){
+					
+					this.graph.addEdge(new UndirectedEdgeSerializable(this.cells[x][y], this.cells[x][y+1]));
+
+				}
+
+			} 
+
+		}
+	}
+
+	public void setMur(int x, int y){
+
+		if (this.cells[x][y].getTypeCell() == TypeCell.Vide){
+
+			this.cells[x][y].setTypeCell(TypeCell.Mur);
+
+			//Pour chaque Edge, si elle touche notre Cell, on l'enleve
+			for (int i = 0; i < this.graph.getNbEdge(); i++){
+				if (this.graph.getEdgeById(i).getVertices()[0] == this.cells[x][y] ||
+				    this.graph.getEdgeById(i).getVertices()[1] == this.cells[x][y]   ){
+
+					this.graph.deleteEdge(this.graph.getEdgeById(i));
+					i--;
+
+				}
+
+			}
+
 		}
 
 	}
@@ -97,38 +133,17 @@ public class Maze {
 	public String toString(){
 		String mess = "";
 
-		boolean[][] valide = new boolean[this.width][this.heigth];
-
 		for (int x = 0; x < width; x++){
 
 			for (int y = 0; y < heigth; y++){
 
-				valide[x][y] = false;
-				
-			}
-		}
-
-		int max = this.graph.getNbVertex();
-
-		for (int i = 0; i < max; i++){
-			if( this.graph.getNeighbours(i).length > 0){
-				valide
-				[ ((Cell) this.graph.getVertexById(i) ).getX() ]
-				[ ((Cell) this.graph.getVertexById(i) ).getY() ] = true;
-			}
-		}
-
-		for (int x = 0; x < width; x++){
-
-			for (int y = 0; y < heigth; y++){
-
-				if(this.cells[x][y] == this.startCell){
+				if( this.cells[x][y].getTypeCell() == TypeCell.Debut){
 					mess = mess.concat("D");
 
-				} else if(this.cells[x][y] == this.finishCell){
+				} else if(this.cells[x][y].getTypeCell() == TypeCell.Arrivee){
 					mess = mess.concat("A");
 
-				} else if(valide[x][y]){
+				} else if(this.cells[x][y].getTypeCell() == TypeCell.Vide){
 					mess = mess.concat(".");
 
 				} else {
