@@ -1,6 +1,6 @@
 package maze;
 
-public enum TypeCell implements java.io.Serializable{
+public enum TypeCell {
 	Arrivee, 
 	Debut, 
 	Vide, 

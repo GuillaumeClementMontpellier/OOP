@@ -54,13 +54,10 @@ public class Game {
 			m.setVide(2,1);
 
 			//charge sauve.maze 
+			/*
 
 			try{
 				FileInputStream sauvegarde = new FileInputStream("save.maze");
-				ObjectInputStream in = new ObjectInputStream(sauvegarde);
-				m = (Maze) in.readObject();
-
-				in.close();
 				sauvegarde.close();
 
 			} catch (IOException i){
@@ -73,17 +70,14 @@ public class Game {
 				System.exit(1);		
 			}
 
-			//
+			//*/
 
 
 			//sauvegarde le maze
 			try {
 
 				FileOutputStream sauvegarde = new FileOutputStream("save.maze");
-				ObjectOutputStream out = new ObjectOutputStream(sauvegarde);
 
-				out.writeObject(m);
-				out.close();
 				sauvegarde.close();
 
 				System.out.println("Yes !!!");

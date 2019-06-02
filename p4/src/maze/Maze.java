@@ -1,6 +1,6 @@
 package maze;
 
-public class Maze implements java.io.Serializable{
+public class Maze {
 
 	private Cell startCell;
 	private Cell finishCell;
@@ -10,7 +10,7 @@ public class Maze implements java.io.Serializable{
 	private int heigth;
 	private int width;
 
-	private UndirectedGraphSerializable graph;
+	private UndirectedGraph graph;
 
 	public Maze(int heigth, int width, int startX, int startY, int finishX, int finishY){
 
@@ -19,7 +19,7 @@ public class Maze implements java.io.Serializable{
 
 		this.cells = new Cell[width][heigth];
 
-		this.graph = new UndirectedGraphSerializable( ( (heigth-1) * width ) + ( heigth * (width-1) ), heigth * width);
+		this.graph = new UndirectedGraph( ( (heigth-1) * width ) + ( heigth * (width-1) ), heigth * width);
 
 		for(int x = 0; x < width; x++){
 
@@ -75,14 +75,14 @@ public class Maze implements java.io.Serializable{
 			if (x > 0){
 				if(this.cells[x-1][y].getTypeCell() != TypeCell.Mur){
 
-					this.graph.addEdge(new UndirectedEdgeSerializable(this.cells[x][y], this.cells[x-1][y]));
+					this.graph.addEdge(new UndirectedEdge(this.cells[x][y], this.cells[x-1][y]));
 
 				}
 			} 
 			if (y > 0){
 				if(this.cells[x][y-1].getTypeCell() != TypeCell.Mur){
 					
-					this.graph.addEdge(new UndirectedEdgeSerializable(this.cells[x][y], this.cells[x][y-1]));
+					this.graph.addEdge(new UndirectedEdge(this.cells[x][y], this.cells[x][y-1]));
 
 				}
 
@@ -91,7 +91,7 @@ public class Maze implements java.io.Serializable{
 
 				if(this.cells[x+1][y].getTypeCell() != TypeCell.Mur){
 					
-					this.graph.addEdge(new UndirectedEdgeSerializable(this.cells[x][y], this.cells[x+1][y]));
+					this.graph.addEdge(new UndirectedEdge(this.cells[x][y], this.cells[x+1][y]));
 
 				}
 
@@ -99,7 +99,7 @@ public class Maze implements java.io.Serializable{
 			if (y < heigth - 1){
 				if(this.cells[x][y+1].getTypeCell() != TypeCell.Mur){
 					
-					this.graph.addEdge(new UndirectedEdgeSerializable(this.cells[x][y], this.cells[x][y+1]));
+					this.graph.addEdge(new UndirectedEdge(this.cells[x][y], this.cells[x][y+1]));
 
 				}
 

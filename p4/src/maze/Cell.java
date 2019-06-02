@@ -3,7 +3,7 @@ package maze;
 import graph.*;
 import impl.*;
 
-public class Cell extends Vertex  implements java.io.Serializable{
+public class Cell extends Vertex {
 
 	private int x;
 	private int y;
