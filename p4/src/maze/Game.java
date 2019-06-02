@@ -112,7 +112,6 @@ public class Game {
 			if (x < 0 || y < 0 || x >= m.getWidth() || y >= m.getHeigth()){
 
 				System.out.println("Input Coord non valide");
-
 			} else if (inputLine.equals("v")){
 
 				m.setVide(x, y);
