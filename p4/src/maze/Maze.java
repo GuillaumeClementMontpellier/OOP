@@ -1,5 +1,8 @@
 package maze;
 
+import graph.*;
+import impl.*;
+
 public class Maze {
 
 	private Cell startCell;
@@ -116,10 +119,10 @@ public class Maze {
 
 			//Pour chaque Edge, si elle touche notre Cell, on l'enleve
 			for (int i = 0; i < this.graph.getNbEdge(); i++){
-				if (this.graph.getEdgeById(i).getVertices()[0] == this.cells[x][y] ||
-				    this.graph.getEdgeById(i).getVertices()[1] == this.cells[x][y]   ){
+				if (this.graph.getEdgeById(i).getVertices()[0] == this.cells[x][y] ||	this.graph.getEdgeById(i).getVertices()[1] == this.cells[x][y]   ){
 
-					this.graph.deleteEdge(this.graph.getEdgeById(i));
+					this.graph.deleteEdge(this.graph.getEdgeById(i));				
+
 					i--;
 
 				}
@@ -130,10 +133,14 @@ public class Maze {
 
 	}
 
+
+
 	public String toString(){
+
 		String mess = "";
 
 		for (int x = 0; x < width; x++){
+			
 
 			for (int y = 0; y < heigth; y++){
 
@@ -150,16 +157,14 @@ public class Maze {
 					mess = mess.concat("O");
 
 				}
-				
+
 			}
 
 			mess = mess.concat("\n");
+			
 		}
 
 		return mess;
-
-
-
 	}
 
 }
